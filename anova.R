@@ -4,11 +4,12 @@ library(ggplot2)
 
 # formulae
 
-DV ~ IV # One-way
+
+DV ~ IV # One-way 1 зависит от другой (Деп вар и нид вар)
 
 DV ~ IV1 + IV2 # Two-way
 
-DV ~ IV1:IV2  # Two-way interaction
+DV ~ IV1:IV2  # Two-way interaction (влияние 1 на другую зависит от третей)
 
 DV ~ IV1 + IV2 + IV1:IV2 # Main effects + interaction
 
@@ -16,11 +17,13 @@ DV ~ IV1 * IV2  # The same: Main effects + interaction
 
 DV ~ IV1 + IV2 + IV3 + IV1:IV2
 
-DV ~ (IV1 + IV2 + IV3)^2 # main effects and all possible interactions up to level 2
+DV ~ (IV1 + IV2 + IV3)^2 # main effects and all possible interactions up to level 2 - указать что есть 3 предиктора и интересюут все + взаимод-ви до 2 уровня
 
-DV ~ IV1 + Error(subject/IV1) # repeated measures
+DV ~ IV1 + Error(subject/IV1) # repeated measures (subject/IV1 -- внутригрупповая независимая переменная)
 
 
+
+# https://science.nature.nps.gov/im/datamgmt/statistics/r/formulas/
 
 # reading data
 
@@ -84,7 +87,7 @@ TukeyHSD(fit5)
 mydata2 <- read.csv('therapy_data.csv')
 str(mydata2)
 
-mydata2$subject <- as.factor(mydata2$subject)
+mydata2$subject <- as.factor(mydata2$subject) - # т.к. изначально $ subject : int  1 1 1 2 2 2 .. а не фактор.
 
 
 fit1 <- aov(well_being ~ therapy, data = mydata2)
